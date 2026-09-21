@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Wedding Invitation | Manish &amp; Mansi</title>
+  
+  <!-- Royal Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-plum: #62083f;
+      --plum-gradient: linear-gradient(145deg, #6c0c46 0%, #46042c 100%);
+      --gold-accent: #cfa362;
+      --gold-light: #e5c388;
+      --sand-bg: #e2c09c;
+      --cream-bg: #fffbf7;
+      --text-dark: #2c1622;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* SCROLL STRICT LOCK: Jab tak opening video complete na ho */
+    body.is-locked {
+      overflow: hidden !important;
+      height: 100vh !important;
+      touch-action: none !important;
+    }
+
+    body {
+      background: #151113;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      background: var(--sand-bg);
+      position: relative;
+      overflow-x: hidden;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+      padding-bottom: 70px;
+    }
+
+    /* ========================================================
+       1. STARTING OPENING OVERLAY
+       ======================================================== */
+    #doorOverlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0f050b;
+      z-index: 1000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease;
+    }
+
+    #openingVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.95);
+    }
+
+    .opening-ui {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .door-emblem {
+      width: 84px;
+      height: 84px;
+      border: 2px solid var(--gold-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(98, 8, 63, 0.75);
+      box-shadow: 0 0 25px rgba(229, 195, 136, 0.6);
+      margin-bottom: 24px;
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    .door-emblem span {
+      font-family: 'Cinzel', serif;
+      color: var(--gold-light);
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    @keyframes pulseGlow {
+      from { transform: scale(0.98); box-shadow: 0 0 15px rgba(229, 195, 136, 0.4); }
+      to { transform: scale(1.06); box-shadow: 0 0 35px rgba(229, 195, 136, 0.9); }
+    }
+
+    .btn-tap-start {
+      background: linear-gradient(135deg, #e5c388, #b38541);
+      color: #3b0626;
+      border: none;
+      padding: 16px 38px;
+      border-radius: 40px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      transition: transform 0.2s;
+    }
+
+    .btn-tap-start:active {
+      transform: scale(0.94);
+    }
+
+    .opening-subtext {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #f7e7ce;
+      margin-top: 14px;
+      text-transform: uppercase;
+    }
+
+    /* ========================================================
+       MUSIC FLOATING BUTTON (GUARANTEED VISIBILITY & ROTATION)
+       ======================================================== */
+    .music-btn-container {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 9999999 !important;
+    }
+
+    .music-circle-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #780d4f, #48042e);
+      border: 2.5px solid #e5c388;
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.7), 0 0 12px rgba(229, 195, 136, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      outline: none;
+      transition: transform 0.2s ease;
+    }
+
+    .music-circle-btn:active {
+      transform: scale(0.92);
+    }
+
+    .music-svg {
+      width: 25px;
+      height: 25px;
+      fill: #e5c388;
+      pointer-events: none;
+      animation: spinMusic 3.5s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .music-circle-btn.is-active .music-svg {
+      animation-play-state: running;
+    }
+
+    .music-circle-btn.is-active {
+      box-shadow: 0 0 18px rgba(229, 195, 136, 0.9), 0 6px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    @keyframes spinMusic {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Scroll Animation */
+    .reveal-elem {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-elem.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========================================================
+       HERO & COUPLE VIDEO DISPLAY (SCREENSHOT 1 & 2 ALIGNMENT)
+       ======================================================== */
+    .hero-wrapper {
+      position: relative;
+      background: var(--sand-bg);
+      padding: 16px 14px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Arch frame couple video / picture */
+    .hero-arch-container {
+      position: relative;
+      width: 100%;
+      border-radius: 200px 200px 20px 20px;
+      overflow: hidden;
+      border: 3px solid var(--gold-accent);
+      box-shadow: 0 12px 30px rgba(98, 8, 63, 0.25);
+      aspect-ratio: 9 / 12;
+      background: #000;
+    }
+
+    .hero-arch-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Glass card jo video ke theek neeche show hoga */
+    .hero-bottom-card {
+      width: 96%;
+      background: rgba(62, 8, 38, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(229, 195, 136, 0.55);
+      border-radius: 18px;
+      padding: 20px 20px 18px;
+      margin-top: -35px; /* Overlaps gracefully below the couple frame */
+      position: relative;
+      z-index: 15;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-bottom-card.show-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-pretitle {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .hero-names {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .hero-names span {
+      font-family: 'Alex Brush', cursive;
+      color: var(--gold-light);
+      font-size: 38px;
+      margin: 0 4px;
+    }
+
+    .hero-line {
+      width: 60px;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--gold-accent), transparent);
+      margin: 10px auto;
+    }
+
+    .hero-quote {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #f7e7ce;
+      text-transform: uppercase;
+    }
+
+    /* SCRATCH CARD */
+    .scratch-section {
+      background: var(--sand-bg);
+      padding: 10px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .scratch-outer-box {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      height: 165px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(98, 8, 63, 0.16);
+    }
+
+    .scratch-revealed-content {
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      border: 2px solid #e0c293;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+      z-index: 1;
+    }
+
+    .save-the-date-title {
+      font-family: 'Cinzel', serif;
+      color: var(--gold-accent);
+      letter-spacing: 2px;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .wedding-date-big {
+      font-family: 'Cinzel', serif;
+      color: var(--primary-plum);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin: 4px 0 8px;
+    }
+
+    .countdown-grid {
+      display: flex;
+      gap: 14px;
+    }
+
+    .time-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .time-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-plum);
+      line-height: 1;
+    }
+
+    .time-lbl {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--gold-accent);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    #scratchCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    #scratchConfettiCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .scratch-instruction {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: #6a4959;
+      text-align: center;
+      margin-top: 12px;
+      text-transform: uppercase;
+    }
+
+    /* SECTIONS COMMON */
+    .welcome-section, .family-section, .events-section {
+      background: var(--cream-bg);
+      text-align: center;
+      position: relative;
+    }
+
+    .welcome-section {
+      border-radius: 30px 30px 0 0;
+      padding: 34px 24px 20px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gold-accent);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .motif-divider {
+      text-align: center;
+      margin: 8px 0;
+      color: var(--gold-accent);
+      font-size: 13px;
+      letter-spacing: 4px;
+    }
+
+    .welcome-title {
+      font-family: 'Cinzel', serif;
+      font-size: 26px;
+      color: var(--primary-plum);
+      font-weight: 700;
+      letter-spacing: 3px;
+    }
+
+    .welcome-script {
+      font-family: 'Alex Brush', cursive;
+      font-size: 34px;
+      color: var(--gold-accent);
+      line-height: 1;
+      margin: 2px 0 10px;
+    }
+
+    .welcome-msg {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #55444e;
+      max-width: 380px;
+      margin: 12px auto 0;
+    }
+
+    /* FAMILY ARCH CARDS */
+    .family-section {
+      padding: 20px 20px 36px;
+    }
+
+    .family-arch-card {
+      background: var(--plum-gradient);
+      border-radius: 110px 110px 20px 20px;
+      padding: 34px 20px 24px;
+      color: #fff;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 25px rgba(98, 8, 63, 0.16);
+      border: 1px solid rgba(229, 195, 136, 0.35);
+    }
+
+    .family-person-name {
+      font-family: 'Alex Brush', cursive;
+      font-size: 40px;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .family-relation-badge {
+      display: inline-block;
+      padding: 3px 18px;
+      border: 1px solid rgba(229, 195, 136, 0.4);
+      border-radius: 30px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-family: 'Cinzel', serif;
+    }
+
+    .family-parents {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      color: #f7e7ce;
+      line-height: 1.6;
+      text-transform: uppercase;
+    }
+
+    .center-monogram {
+      width: 44px;
+      height: 44px;
+      background: var(--primary-plum);
+      transform: rotate(45deg);
+      margin: 12px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid var(--gold-accent);
+    }
+
+    .center-monogram span {
+      transform: rotate(-45deg);
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* 3D DIAGONAL SWIPE GALLERY */
+    .gallery-section {
+      background: var(--sand-bg);
+      padding: 30px 16px 36px;
+      text-align: center;
+    }
+
+    .deck-container {
+      position: relative;
+      width: 290px;
+      height: 380px;
+      margin: 22px auto 14px;
+      perspective: 1000px;
+    }
+
+    .card-deck {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .swipe-card {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 3px solid #e5c388;
+      box-shadow: 0 12px 28px rgba(70, 4, 44, 0.28);
+      cursor: grab;
+      touch-action: none;
+      transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.45s ease;
+      background: #333;
+    }
+
+    .swipe-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .swipe-card.pos-0 { transform: translate3d(0, 0, 0) rotate(0deg); z-index: 6; opacity: 1; }
+    .swipe-card.pos-1 { transform: translate3d(8px, -8px, -20px) rotate(2deg); z-index: 5; opacity: 0.95; }
+    .swipe-card.pos-2 { transform: translate3d(16px, -16px, -40px) rotate(4deg); z-index: 4; opacity: 0.9; }
+    .swipe-card.pos-3 { transform: translate3d(24px, -24px, -60px) rotate(6deg); z-index: 3; opacity: 0.85; }
+    .swipe-card.pos-hidden { transform: translate3d(32px, -32px, -80px) scale(0.9); z-index: 1; opacity: 0; }
+
+    .swipe-card.swiping-away {
+      transform: translate3d(-140%, -40%, 0) rotate(-22deg) !important;
+      opacity: 0 !important;
+      transition: transform 0.4s ease-out, opacity 0.4s ease-out !important;
+    }
+
+    .gallery-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .btn-gallery {
+      background: var(--primary-plum);
+      color: var(--gold-light);
+      border: 1px solid var(--gold-accent);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-count {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary-plum);
+      letter-spacing: 2px;
+    }
+
+    /* ========================================================
+       VERTICAL DIRECT VIDEOS (NO POSTER IMAGES)
+       ======================================================== */
+    .events-section {
+      padding: 34px 18px;
+    }
+
+    .event-video-card {
+      background: var(--plum-gradient);
+      border-radius: 22px;
+      padding: 22px 16px 20px;
+      color: #fff;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 25px rgba(98, 8, 63, 0.25);
+      border: 1.5px solid rgba(229, 195, 136, 0.45);
+    }
+
+    .event-card-name {
+      font-family: 'Alex Brush', cursive;
+      font-size: 40px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .event-datetime {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .event-venue {
+      font-size: 12px;
+      color: #f1e4d3;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    /* 9:16 VERTICAL DIRECT VIDEO PLAYER */
+    .vertical-video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 290px;
+      margin: 0 auto 16px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid var(--gold-accent);
+      background: #000;
+      aspect-ratio: 9 / 16;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    }
+
+    .vertical-video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .event-btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .btn-card-action {
+      background: var(--gold-accent);
+      color: #3b0626;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-card-outline {
+      background: transparent;
+      color: var(--gold-light);
+      border: 1px solid rgba(229, 195, 136, 0.6);
+    }
+
+    /* MAP SECTION */
+    .map-section {
+      background: var(--sand-bg);
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .map-box {
+      background: var(--primary-plum);
+      border-radius: 20px;
+      padding: 24px 18px;
+      color: #fff;
+      border: 1px solid rgba(229, 195, 136, 0.4);
+    }
+
+    .map-iframe-container {
+      width: 100%;
+      height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 16px 0;
+      border: 1.5px solid var(--gold-accent);
+    }
+
+    .map-iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* BLESSINGS & WHATSAPP */
+    .blessings-section {
+      background: var(--primary-plum);
+      padding: 36px 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .blessings-desc {
+      font-size: 12px;
+      line-height: 1.7;
+      color: #ecd5bc;
+      margin: 10px auto 20px;
+      max-width: 360px;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(229, 195, 136, 0.45);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .form-textarea {
+      resize: none;
+      height: 85px;
+    }
+
+    .btn-whatsapp {
+      width: 100%;
+      background: #25d366;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 14px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+    }
+
+    .footer-regards {
+      margin-top: 36px;
+    }
+
+    .footer-names {
+      font-family: 'Alex Brush', cursive;
+      font-size: 44px;
+      color: #fff;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body class="is-locked">
+
+  <!-- 1. STARTING OPENING OVERLAY (TAP TO START) -->
+  <div id="doorOverlay">
+    <video id="openingVideo" playsinline preload="auto">
+      <source src="videos/starting.mp4" type="video/mp4">
+      <source src="starting.mp4" type="video/mp4">
+    </video>
+
+    <div class="opening-ui" id="openingUI">
+      <div class="door-emblem">
+        <span>M|M</span>
+      </div>
+      <button class="btn-tap-start" id="btnTapStart">
+        ✨ TAP TO START ✨
+      </button>
+      <div class="opening-subtext">The Royal Wedding Celebration</div>
+    </div>
+  </div>
+
+  <!-- WEDDING MUSIC AUDIO -->
+  <audio id="weddingBgm" loop preload="auto">
+    <source src="Adha Tera Ishq Aadha Mera wedding-music.mp3" type="audio/mpeg">
+    <source src="Adha Tera Ishq Aadha Mera wedding-music .mp3" type="audio/mpeg">
+    <source src="wedding-music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- FLOATING ROTATING MUSIC BUTTON -->
+  <div class="music-btn-container">
+    <button class="music-circle-btn" id="floatingMusicBtn" aria-label="Play Music" title="Play / Pause Music">
+      <svg class="music-svg" viewBox="0 0 24 24">
+        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="app-container">
+
+    <!-- HERO SECTION (JHAROKHA COUPLE VIDEO + DYNAMIC BOTTOM CARD) -->
+    <header class="hero-wrapper">
+      <!-- Top Royal Arch Frame with Couple Video (Screenshot 2 Theme) -->
+      <div class="hero-arch-container">
+        <video class="hero-arch-video" id="heroCoupleVideo" autoplay loop muted playsinline>
+          <source src="videos/starting.mp4" type="video/mp4">
+          <source src="starting.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <!-- Glass Card positioned BELOW the couple video (Screenshot 1 Theme) -->
+      <div class="hero-bottom-card" id="heroBottomCard">
+        <div class="hero-pretitle">We Are Getting Married</div>
+        <h1 class="hero-names">Manish <span>weds</span> Mansi</h1>
+        <div class="hero-line"></div>
+        <div class="hero-quote">Together is a wonderful place to be</div>
+      </div>
+    </header>
+
+    <!-- SCRATCH CARD SECTION -->
+    <section class="scratch-section">
+      <div class="scratch-outer-box" id="scratchWrapper">
+        <div class="scratch-revealed-content">
+          <div class="save-the-date-title">Save The Date</div>
+          <div class="wedding-date-big">NOVEMBER 27, 2026</div>
+          
+          <div class="countdown-grid">
+            <div class="time-unit"><span class="time-num" id="cdDays">00</span><span class="time-lbl">Days</span></div>
+            <div class="time-unit"><span class="time-num" id="cdHours">00</span><span class="time-lbl">Hours</span></div>
+            <div class="time-unit"><span class="time-num" id="cdMins">00</span><span class="time-lbl">Mins</span></div>
+            <div class="time-unit"><span class="time-num" id="cdSecs">00</span><span class="time-lbl">Secs</span></div>
+          </div>
+        </div>
+
+        <canvas id="scratchCanvas"></canvas>
+        <canvas id="scratchConfettiCanvas"></canvas>
+      </div>
+
+      <div class="scratch-instruction">
+        ✦ Scratch the card to reveal our special date ✦
+      </div>
+    </section>
+
+    <!-- WELCOME SECTION -->
+    <section class="welcome-section">
+      <div class="section-eyebrow reveal-elem">With Joy In Our Hearts</div>
+      <div class="motif-divider reveal-elem">❧ ❦ ☙</div>
+      <h2 class="welcome-title reveal-elem">WELCOME</h2>
+      <div class="welcome-script reveal-elem">to our wedding</div>
+      
+      <p class="welcome-msg reveal-elem">
+        We warmly invite you to celebrate our wedding day with us. We look forward to sharing this unforgettable moment with our most special people.
+      </p>
+    </section>
+
+    <!-- FAMILY SECTION -->
+    <section class="family-section">
+      <div class="family-header-tag reveal-elem">Two Families. One Promise.</div>
+      <div class="motif-divider reveal-elem">❧ ❦ ☙</div>
+      <h2 class="family-header-main reveal-elem">INTRODUCING</h2>
+      <div class="family-header-script reveal-elem">the families</div>
+
+      <div class="family-arch-card reveal-elem">
+        <h3 class="family-person-name">Manish</h3>
+        <div class="family-relation-badge">Son of</div>
+        <div class="family-parents">
+          Groom's Father<br>&amp; Groom's Mother
+        </div>
+      </div>
+
+      <div class="center-monogram reveal-elem">
+        <span>M|M</span>
+      </div>
+
+      <div class="family-arch-card reveal-elem">
+        <h3 class="family-person-name">Mansi</h3>
+        <div class="family-relation-badge">Daughter of</div>
+        <div class="family-parents">
+          Bride's Father<br>&amp; Bride's Mother
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D SWIPE GALLERY (6 PHOTOS) -->
+    <section class="gallery-section">
+      <div class="section-eyebrow reveal-elem">Raised With Love, United By Destiny</div>
+      <div class="motif-divider reveal-elem">❧ ❦ ☙</div>
+      <h2 class="welcome-title reveal-elem" style="color: var(--primary-plum);">OUR PRECIOUS</h2>
+      <div class="welcome-script reveal-elem" style="color: var(--primary-plum);">Moments</div>
+
+      <div class="deck-container">
+        <div class="card-deck" id="cardDeck">
+          <div class="swipe-card pos-0"><img src="images/gallery (1).png" alt="Photo 1" /></div>
+          <div class="swipe-card pos-1"><img src="images/gallery (2).png" alt="Photo 2" /></div>
+          <div class="swipe-card pos-2"><img src="images/gallery (3).png" alt="Photo 3" /></div>
+          <div class="swipe-card pos-3"><img src="images/gallery (4).png" alt="Photo 4" /></div>
+          <div class="swipe-card pos-hidden"><img src="images/gallery (5).png" alt="Photo 5" /></div>
+          <div class="swipe-card pos-hidden"><img src="images/gallery (6).png" alt="Photo 6" /></div>
+        </div>
+      </div>
+
+      <div class="gallery-controls">
+        <button class="btn-gallery" id="btnPrevCard" title="Previous">❮</button>
+        <span class="gallery-count" id="galleryCounter">1 / 6</span>
+        <button class="btn-gallery" id="btnNextCard" title="Next">❯</button>
+      </div>
+    </section>
+
+    <!-- VERTICAL DIRECT VIDEOS (HALDI, MEHENDI, SANGEET, WEDDING, RECEPTION) -->
+    <section class="events-section">
+      <div class="section-eyebrow reveal-elem">Celebration Timeline</div>
+      <div class="motif-divider reveal-elem">❧ ❦ ☙</div>
+      <h2 class="welcome-title reveal-elem" style="font-size:22px; margin-bottom: 24px;">CEREMONY VIDEOS &amp; EVENTS</h2>
+
+      <!-- 1. HALDI -->
+      <div class="event-video-card reveal-elem">
+        <div class="event-card-name">Haldi &amp; Phoolon Ki Holi</div>
+        <div class="event-datetime">06 DEC 2026 • 10:30 AM</div>
+        <div class="event-venue">Courtyard Garden, Raj Palace, Noida</div>
+
+        <div class="vertical-video-wrapper">
+          <video autoplay loop muted playsinline controls>
+            <source src="videos/haldi.mp4" type="video/mp4">
+            <source src="haldi.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="event-btn-row">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Raj+Palace+Sector+51+Noida" target="_blank" class="btn-card-action">📍 Direction</a>
+          <button class="btn-card-action btn-card-outline" onclick="addCalEvent('Haldi Ceremony','2026-12-06T10:30:00')">📅 Calendar</button>
+        </div>
+      </div>
+
+      <!-- 2. MEHENDI -->
+      <div class="event-video-card reveal-elem">
+        <div class="event-card-name">Mehendi Carnival</div>
+        <div class="event-datetime">06 DEC 2026 • 05:00 PM</div>
+        <div class="event-venue">Poolside Lawn, Raj Palace, Noida</div>
+
+        <div class="vertical-video-wrapper">
+          <video autoplay loop muted playsinline controls>
+            <source src="videos/mehendi.mp4" type="video/mp4">
+            <source src="mehendi.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="event-btn-row">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Raj+Palace+Sector+51+Noida" target="_blank" class="btn-card-action">📍 Direction</a>
+          <button class="btn-card-action btn-card-outline" onclick="addCalEvent('Mehendi Ceremony','2026-12-06T17:00:00')">📅 Calendar</button>
+        </div>
+      </div>
+
+      <!-- 3. SANGEET -->
+      <div class="event-video-card reveal-elem">
+        <div class="event-card-name">Sangeet &amp; Cocktail</div>
+        <div class="event-datetime">07 DEC 2026 • 07:30 PM</div>
+        <div class="event-venue">Grand Ballroom, Raj Palace, Noida</div>
+
+        <div class="vertical-video-wrapper">
+          <video autoplay loop muted playsinline controls>
+            <source src="videos/sugeet.mp4" type="video/mp4">
+            <source src="videos/sangeet.mp4" type="video/mp4">
+            <source src="sugeet.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="event-btn-row">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Raj+Palace+Sector+51+Noida" target="_blank" class="btn-card-action">📍 Direction</a>
+          <button class="btn-card-action btn-card-outline" onclick="addCalEvent('Sangeet Night','2026-12-07T19:30:00')">📅 Calendar</button>
+        </div>
+      </div>
+
+      <!-- 4. WEDDING -->
+      <div class="event-video-card reveal-elem">
+        <div class="event-card-name">Wedding &amp; Muhurtham</div>
+        <div class="event-datetime">08 DEC 2026 • 10:30 AM ONWARDS</div>
+        <div class="event-venue">Royal Mandap, Raj Palace, Sector 51, Noida</div>
+
+        <div class="vertical-video-wrapper">
+          <video autoplay loop muted playsinline controls>
+            <source src="videos/wedding.mp4" type="video/mp4">
+            <source src="wedding.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="event-btn-row">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Raj+Palace+Sector+51+Noida" target="_blank" class="btn-card-action">📍 Direction</a>
+          <button class="btn-card-action btn-card-outline" onclick="addCalEvent('Wedding Ceremony','2026-12-08T10:30:00')">📅 Calendar</button>
+        </div>
+      </div>
+
+      <!-- 5. RECEPTION -->
+      <div class="event-video-card reveal-elem">
+        <div class="event-card-name">Grand Reception</div>
+        <div class="event-datetime">08 DEC 2026 • 07:30 PM</div>
+        <div class="event-venue">Imperial Lawn, Raj Palace, Noida</div>
+
+        <div class="vertical-video-wrapper">
+          <video autoplay loop muted playsinline controls>
+            <source src="videos/reception.mp4" type="video/mp4">
+            <source src="reception.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="event-btn-row">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Raj+Palace+Sector+51+Noida" target="_blank" class="btn-card-action">📍 Direction</a>
+          <button class="btn-card-action btn-card-outline" onclick="addCalEvent('Grand Reception','2026-12-08T19:30:00')">📅 Calendar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAP SECTION -->
+    <section class="map-section">
+      <div class="map-box reveal-elem">
+        <div class="section-eyebrow" style="color: var(--gold-light);">Location</div>
+        <h3 class="welcome-title" style="color: #fff; font-size: 20px;">RAJ PALACE</h3>
+        <p style="font-size: 11px; color: #eed4c1; margin-top: 4px;">Sector 51, Noida, Uttar Pradesh</p>
+
+        <div class="map-iframe-container">
+          <iframe src="https://maps.google.com/maps?q=Sector%2051%20Noida&t=&z=14&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy"></iframe>
+        </div>
+
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Sector+51+Noida" target="_blank" class="btn-card-action" style="margin: 0 auto;">
+          📍 Get Directions on Google Maps
+        </a>
+      </div>
+    </section>
+
+    <!-- BLESSINGS & WHATSAPP WISHES -->
+    <footer class="blessings-section">
+      <div class="section-eyebrow" style="color: var(--gold-light);">Send Your Blessings</div>
+      <div class="welcome-script" style="color: var(--gold-light);">Best Wishes</div>
+      <div class="motif-divider">❧ ❦ ☙</div>
+
+      <p class="blessings-desc">
+        Your love, warm blessings, and wishes mean the world to us as we step into this beautiful journey together. Send us your warm wishes below!
+      </p>
+
+      <form id="wishesForm" onsubmit="sendWishWhatsApp(event)" class="reveal-elem">
+        <div class="form-group">
+          <label class="form-label" for="guestName">Your Name</label>
+          <input type="text" id="guestName" class="form-input" placeholder="Enter your full name" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestWish">Your Wishes / Message</label>
+          <textarea id="guestWish" class="form-textarea" placeholder="Write your warm wishes for the couple..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-whatsapp">
+          <span>💬</span> Send Wishes on WhatsApp
+        </button>
+      </form>
+
+      <div class="footer-regards reveal-elem">
+        <p>With lots of love &amp; regards</p>
+        <div class="footer-names">Manish &amp; Mansi</div>
+        <div class="motif-divider" style="margin-top: 12px;">༄༅ ✦ ༅༄</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    /* 1. STARTING VIDEO, END TRIGGER & BOTTOM CARD REVEAL */
+    const doorOverlay = document.getElementById("doorOverlay");
+    const openingVideo = document.getElementById("openingVideo");
+    const openingUI = document.getElementById("openingUI");
+    const btnTapStart = document.getElementById("btnTapStart");
+    const audio = document.getElementById("weddingBgm");
+    const musicBtn = document.getElementById("floatingMusicBtn");
+    const heroBottomCard = document.getElementById("heroBottomCard");
+
+    btnTapStart.addEventListener("click", () => {
+      openingUI.style.display = "none";
+
+      // 1. Play Opening Video
+      openingVideo.play().catch(e => {
+        console.log("Opening video fallback:", e);
+        finishOpening();
+      });
+
+      // 2. Audio playback with button rotation
+      audio.volume = 1.0;
+      audio.play().then(() => {
+        musicBtn.classList.add("is-active");
+      }).catch(err => {
+        console.log("Audio play error:", err);
+      });
+    });
+
+    // Jab starting video 80% chal chuki ho tab bottom card smooth slide kare
+    openingVideo.addEventListener("timeupdate", () => {
+      if (openingVideo.duration && openingVideo.currentTime / openingVideo.duration > 0.8) {
+        heroBottomCard.classList.add("show-card");
+      }
+    });
+
+    openingVideo.addEventListener("ended", finishOpening);
+
+    function finishOpening() {
+      heroBottomCard.classList.add("show-card");
+      doorOverlay.style.opacity = "0";
+      setTimeout(() => {
+        doorOverlay.style.display = "none";
+        document.body.classList.remove("is-locked");
+      }, 900);
+    }
+
+    /* 2. FLOATING MUSIC TOGGLE */
+    audio.addEventListener("play", () => musicBtn.classList.add("is-active"));
+    audio.addEventListener("pause", () => musicBtn.classList.remove("is-active"));
+
+    musicBtn.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play().then(() => musicBtn.classList.add("is-active"));
+      } else {
+        audio.pause();
+        musicBtn.classList.remove("is-active");
+      }
+    });
+
+    /* 3. COUNTDOWN TIMER */
+    const WEDDING_TARGET_DATE = new Date("2026-11-27T10:30:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = WEDDING_TARGET_DATE - now;
+
+      if (diff > 0) {
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("cdDays").textContent = String(d).padStart(2, '0');
+        document.getElementById("cdHours").textContent = String(h).padStart(2, '0');
+        document.getElementById("cdMins").textContent = String(m).padStart(2, '0');
+        document.getElementById("cdSecs").textContent = String(s).padStart(2, '0');
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    /* 4. SCROLL REVEAL */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal-elem').forEach(el => revealObserver.observe(el));
+
+    /* 5. SCRATCH CARD & CONFETTI */
+    const canvas = document.getElementById("scratchCanvas");
+    const ctx = canvas.getContext("2d");
+    const confettiCanvas = document.getElementById("scratchConfettiCanvas");
+    const confCtx = confettiCanvas.getContext("2d");
+    let isDrawing = false;
+    let isRevealed = false;
+
+    function initScratch() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      confettiCanvas.width = rect.width;
+      confettiCanvas.height = rect.height;
+
+      const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      grad.addColorStop(0, "#6a0945");
+      grad.addColorStop(0.5, "#800c54");
+      grad.addColorStop(1, "#4d0431");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < 45; i++) {
+        ctx.fillStyle = "rgba(229, 195, 136, " + (Math.random() * 0.7 + 0.3) + ")";
+        ctx.beginPath();
+        ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2 + 1, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.font = "600 11px Cinzel, serif";
+      ctx.fillStyle = "#f5d7a1";
+      ctx.textAlign = "center";
+      ctx.fillText("✦ SCRATCH TO REVEAL ✦", canvas.width / 2, canvas.height / 2 - 4);
+
+      ctx.font = "italic 16px 'Playfair Display', serif";
+      ctx.fillStyle = "rgba(255,255,255,0.7)";
+      ctx.fillText("our special day", canvas.width / 2, canvas.height / 2 + 18);
+    }
+
+    function getCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      if (e.touches && e.touches[0]) {
+        return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+      }
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function scratch(e) {
+      if (!isDrawing || isRevealed) return;
+      const { x, y } = getCoords(e);
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, 24, 0, Math.PI * 2);
+      ctx.fill();
+      checkScratchPercentage();
+    }
+
+    function checkScratchPercentage() {
+      if (isRevealed) return;
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let transparentPixels = 0;
+      for (let i = 3; i < imgData.data.length; i += 16) {
+        if (imgData.data[i] === 0) transparentPixels++;
+      }
+      const totalSampled = imgData.data.length / 16;
+      if (transparentPixels / totalSampled > 0.38) {
+        isRevealed = true;
+        canvas.style.transition = "opacity 0.6s ease";
+        canvas.style.opacity = "0";
+        setTimeout(() => { canvas.style.display = "none"; }, 600);
+        triggerCardConfetti();
+      }
+    }
+
+    function triggerCardConfetti() {
+      const confettiPieces = [];
+      const colors = ['#e5c388', '#b38541', '#800c54', '#ffffff', '#ffd180'];
+      for (let i = 0; i < 60; i++) {
+        confettiPieces.push({
+          x: confettiCanvas.width / 2,
+          y: confettiCanvas.height / 2,
+          w: Math.random() * 8 + 4,
+          h: Math.random() * 5 + 3,
+          vx: (Math.random() - 0.5) * 12,
+          vy: (Math.random() - 0.7) * 10,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 12,
+          gravity: 0.25,
+          alpha: 1
+        });
+      }
+
+      function animateConfetti() {
+        confCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        let alive = false;
+        confettiPieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += p.gravity;
+          p.rotation += p.vRot;
+          p.alpha -= 0.012;
+
+          if (p.alpha > 0) {
+            alive = true;
+            confCtx.save();
+            confCtx.globalAlpha = p.alpha;
+            confCtx.translate(p.x, p.y);
+            confCtx.rotate(p.rotation * Math.PI / 180);
+            confCtx.fillStyle = p.color;
+            confCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            confCtx.restore();
+          }
+        });
+
+        if (alive) requestAnimationFrame(animateConfetti);
+        else confCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      }
+      requestAnimationFrame(animateConfetti);
+    }
+
+    canvas.addEventListener("mousedown", (e) => { isDrawing = true; scratch(e); });
+    window.addEventListener("mousemove", scratch);
+    window.addEventListener("mouseup", () => { isDrawing = false; });
+    canvas.addEventListener("touchstart", (e) => { isDrawing = true; scratch(e); }, { passive: true });
+    window.addEventListener("touchmove", scratch, { passive: true });
+    window.addEventListener("touchend", () => { isDrawing = false; });
+    window.addEventListener("load", initScratch);
+
+    /* 6. 3D SWIPE GALLERY DECK */
+    const cards = Array.from(document.querySelectorAll(".swipe-card"));
+    const counterEl = document.getElementById("galleryCounter");
+    let currentTop = 0;
+
+    function updateDeckPositions() {
+      cards.forEach((card, idx) => {
+        card.className = "swipe-card";
+        const relPos = (idx - currentTop + cards.length) % cards.length;
+        if (relPos === 0) card.classList.add("pos-0");
+        else if (relPos === 1) card.classList.add("pos-1");
+        else if (relPos === 2) card.classList.add("pos-2");
+        else if (relPos === 3) card.classList.add("pos-3");
+        else card.classList.add("pos-hidden");
+      });
+      counterEl.textContent = `${currentTop + 1} / ${cards.length}`;
+    }
+
+    function swipeNext() {
+      const topCard = cards[currentTop];
+      topCard.classList.add("swiping-away");
+      setTimeout(() => {
+        currentTop = (currentTop + 1) % cards.length;
+        updateDeckPositions();
+      }, 300);
+    }
+
+    function swipePrev() {
+      currentTop = (currentTop - 1 + cards.length) % cards.length;
+      updateDeckPositions();
+    }
+
+    document.getElementById("btnNextCard").addEventListener("click", swipeNext);
+    document.getElementById("btnPrevCard").addEventListener("click", swipePrev);
+
+    let startX = 0, startY = 0;
+    const deckWrapper = document.getElementById("cardDeck");
+    deckWrapper.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+
+    deckWrapper.addEventListener("touchend", (e) => {
+      const diffX = e.changedTouches[0].clientX - startX;
+      const diffY = e.changedTouches[0].clientY - startY;
+      if (Math.abs(diffX) > 40 || Math.abs(diffY) > 40) {
+        swipeNext();
+      }
+    });
+
+    /* 7. WHATSAPP BLESSINGS DISPATCHER */
+    function sendWishWhatsApp(e) {
+      e.preventDefault();
+      const name = document.getElementById("guestName").value.trim();
+      const msg = document.getElementById("guestWish").value.trim();
+      
+      const phoneNumber = "919876543210";
+
+      const text = `*Wedding Wishes for Manish & Mansi!*%0A%0A*From:* ${encodeURIComponent(name)}%0A*Message:* ${encodeURIComponent(msg)}`;
+      window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
+    }
+
+    /* 8. CALENDAR EVENT (.ics) */
+    function addCalEvent(title, startTimeStr) {
+      const dt = new Date(startTimeStr);
+      const endDt = new Date(dt.getTime() + (3 * 60 * 60 * 1000));
+      const fmt = (d) => d.toISOString().replace(/-|:|\.\d\d\d/g, "");
+      
+      const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${title}\nLOCATION:Raj Palace, Noida\nDTSTART:${fmt(dt)}\nDTEND:${fmt(endDt)}\nEND:VEVENT\nEND:VCALENDAR`;
+
+      const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute("download", `${title.replace(/\s+/g, '_')}.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
